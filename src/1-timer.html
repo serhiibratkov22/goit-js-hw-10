@@ -12,6 +12,33 @@
       <div class="container">
         <h1 class="main-title">Timer</h1>
         <a class="back-link" href="./index.html">Go back</a>
+        <div class="input-container">
+          <input
+            type="datetime-local"
+            id="dateInput"
+            value="2021-07-31T17:57"
+          />
+          <button id="startButton">Start</button>
+        </div>
+
+        <div class="countdown-container">
+          <div class="countdown-item">
+            <div id="days" class="countdown-value">00</div>
+            <div class="countdown-label">DAYS</div>
+          </div>
+          <div class="countdown-item">
+            <div id="hours" class="countdown-value">23</div>
+            <div class="countdown-label">HOURS</div>
+          </div>
+          <div class="countdown-item">
+            <div id="minutes" class="countdown-value">58</div>
+            <div class="countdown-label">MINUTES</div>
+          </div>
+          <div class="countdown-item">
+            <div id="seconds" class="countdown-value">58</div>
+            <div class="countdown-label">SECONDS</div>
+          </div>
+        </div>
       </div>
     </main>
     <script src="./js/1-timer.js" type="module"></script>
