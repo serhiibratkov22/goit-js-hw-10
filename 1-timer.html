@@ -7,6 +7,8 @@
     <title>Timer</title>
     <script type="module" crossorigin src="/goit-js-hw-10/1-timer.js"></script>
     <link rel="modulepreload" crossorigin href="/goit-js-hw-10/assets/modulepreload-polyfill-B5Qt9EMX.js">
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-10/assets/vendor-BbbuE1sJ.js">
+    <link rel="stylesheet" crossorigin href="/goit-js-hw-10/assets/vendor-CZjNVMTf.css">
     <link rel="stylesheet" crossorigin href="/goit-js-hw-10/assets/styles-1xhoMysE.css">
   </head>
   <body>
@@ -14,30 +16,25 @@
       <div class="container">
         <h1 class="main-title">Timer</h1>
         <a class="back-link" href="./index.html">Go back</a>
-        <div class="input-container">
-          <input
-            type="datetime-local"
-            id="dateInput"
-            value="2021-07-31T17:57"
-          />
-          <button id="startButton">Start</button>
-        </div>
+
+        <input type="text" id="datetime-picker" />
+        <button type="button" data-start>Start</button>
 
         <div class="countdown-container">
           <div class="countdown-item">
-            <div id="days" class="countdown-value">00</div>
+            <span data-days>00</span>
             <div class="countdown-label">DAYS</div>
           </div>
           <div class="countdown-item">
-            <div id="hours" class="countdown-value">23</div>
+            <span data-hours>00</span>
             <div class="countdown-label">HOURS</div>
           </div>
           <div class="countdown-item">
-            <div id="minutes" class="countdown-value">58</div>
+            <span data-minutes>00</span>
             <div class="countdown-label">MINUTES</div>
           </div>
           <div class="countdown-item">
-            <div id="seconds" class="countdown-value">58</div>
+            <span data-seconds>00</span>
             <div class="countdown-label">SECONDS</div>
           </div>
         </div>
