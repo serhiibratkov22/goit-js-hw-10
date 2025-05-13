@@ -1,16 +1,36 @@
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
+
 document.addEventListener('DOMContentLoaded', function () {
-  const dateInput = document.getElementById('dateInput');
-  const startButton = document.getElementById('startButton');
-  const daysElement = document.getElementById('days');
-  const hoursElement = document.getElementById('hours');
-  const minutesElement = document.getElementById('minutes');
-  const secondsElement = document.getElementById('seconds');
+  const dateInput = document.getElementById('datetime-picker');
+  const startButton = document.querySelector('[data-start]');
+  const daysElement = document.querySelector('[data-days]');
+  const hoursElement = document.querySelector('[data-hours]');
+  const minutesElement = document.querySelector('[data-minutes]');
+  const secondsElement = document.querySelector('[data-seconds]');
 
   let countdownInterval;
   let targetDate;
 
-  function formatNumber(number) {
-    return number < 10 ? '0' + number : number;
+  // Ініціалізація flatpickr
+  flatpickr(dateInput, {
+    enableTime: true,
+    time_24hr: true,
+    defaultDate: new Date(),
+    minuteIncrement: 1,
+    onClose(selectedDates) {
+      targetDate = selectedDates[0];
+      if (targetDate <= new Date()) {
+        alert('Please choose a date in the future');
+        startButton.disabled = true;
+      } else {
+        startButton.disabled = false;
+      }
+    },
+  });
+
+  function formatNumber(value) {
+    return String(value).padStart(2, '0');
   }
 
   function updateCountdown() {
@@ -39,16 +59,14 @@ document.addEventListener('DOMContentLoaded', function () {
     secondsElement.textContent = formatNumber(seconds);
   }
 
-  startButton.addEventListener('click', function () {
-    if (countdownInterval) {
-      clearInterval(countdownInterval);
+  startButton.addEventListener('click', () => {
+    if (!targetDate) {
+      alert('Please select a date first.');
+      return;
     }
 
-    targetDate = new Date(dateInput.value).getTime();
-
-    if (isNaN(targetDate) || targetDate <= Date.now()) {
-      alert('Please choose a valid future date.');
-      return;
+    if (countdownInterval) {
+      clearInterval(countdownInterval);
     }
 
     updateCountdown();
