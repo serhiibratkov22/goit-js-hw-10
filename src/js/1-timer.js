@@ -1,5 +1,7 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
 document.addEventListener('DOMContentLoaded', function () {
   const dateInput = document.getElementById('datetime-picker');
@@ -9,11 +11,12 @@ document.addEventListener('DOMContentLoaded', function () {
   const minutesElement = document.querySelector('[data-minutes]');
   const secondsElement = document.querySelector('[data-seconds]');
 
-  let countdownInterval;
-  let targetDate;
+  let countdownInterval = null;
+  let targetDate = null;
 
-  // Ініціалізація flatpickr
-  flatpickr(dateInput, {
+  startButton.disabled = true; // спочатку кнопка неактивна
+
+  const fp = flatpickr(dateInput, {
     enableTime: true,
     time_24hr: true,
     defaultDate: new Date(),
@@ -21,7 +24,11 @@ document.addEventListener('DOMContentLoaded', function () {
     onClose(selectedDates) {
       targetDate = selectedDates[0];
       if (targetDate <= new Date()) {
-        alert('Please choose a date in the future');
+        iziToast.error({
+          title: 'Error',
+          message: 'Please choose a date in the future',
+          position: 'topRight',
+        });
         startButton.disabled = true;
       } else {
         startButton.disabled = false;
@@ -43,6 +50,11 @@ document.addEventListener('DOMContentLoaded', function () {
       hoursElement.textContent = '00';
       minutesElement.textContent = '00';
       secondsElement.textContent = '00';
+
+      // Розблокувати інтерфейс після завершення
+      startButton.disabled = false;
+      dateInput.disabled = false;
+      fp.input.disabled = false;
       return;
     }
 
@@ -61,9 +73,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
   startButton.addEventListener('click', () => {
     if (!targetDate) {
-      alert('Please select a date first.');
+      iziToast.warning({
+        title: 'Warning',
+        message: 'Please select a date first.',
+        position: 'topRight',
+      });
       return;
     }
+
+    // Деактивуємо кнопку та поле вводу дати
+    startButton.disabled = true;
+    dateInput.disabled = true;
+    fp.input.disabled = true;
 
     if (countdownInterval) {
       clearInterval(countdownInterval);
